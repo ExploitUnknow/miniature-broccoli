@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>اللوحة — سجلّات المملكة المتصدّعة</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='9' y='9' width='14' height='14' transform='rotate(45 16 16)' fill='%23fbbf24'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg0: #0a0a0f;
+    --bg1: #12121a;
+    --bg2: #1a1a24;
+    --line: #2a2a3a;
+    --vellum: #e5e5ea;
+    --dim: #a0a0ad;
+    --faint: #6a6a78;
+    --gold: #fbbf24;
+    --gold-bright: #fde28a;
+    --gold-line: rgba(251, 191, 36, 0.22);
+    --gold-soft: rgba(251, 191, 36, 0.07);
+    --seal: #ef4444;
+    --r-uncommon: #1eff00;
+    --r-rare: #0070dd;
+    --r-epic: #a335ee;
+    --r-legendary: #ff8000;
+    --acc-blue: #00d4ff;
+    --ok: #22c55e;
+    --display: "Cinzel", Georgia, serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    --glow-gold: 0 0 20px rgba(251, 191, 36, 0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background:
+      radial-gradient(ellipse 50% 35% at 15% 0%, rgba(0, 212, 255, 0.04), transparent 60%),
+      radial-gradient(ellipse 50% 35% at 85% 0%, rgba(251, 191, 36, 0.05), transparent 60%),
+      var(--bg0);
+    color: var(--vellum);
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: rgba(251, 191, 36, 0.25); }
+
+  html[data-lang="ar"] .en { display: none !important; }
+  html[data-lang="en"] .ar { display: none !important; }
+  html[data-lang="ar"] body { font-family: "Tajawal", "Segoe UI", Tahoma, sans-serif; }
+  h1, h2, .wordmark { font-family: var(--display); }
+  html[data-lang="ar"] :is(h1, h2, .wordmark) { font-family: "Amiri", serif; }
+  html[data-lang="ar"] :is(.label, .lang-btn, .crumb, .tile-k, .tile-sub, .bar-k, .bar-v,
+    .feed-head, .feed-item .meta, .chipx, .cd-seg .u, .status-pill) {
+    letter-spacing: 0 !important;
+    font-family: "Tajawal", sans-serif;
+  }
+
+  a { color: var(--gold-bright); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); }
+
+  /* ---------- top bar ---------- */
+
+  .bar { position: sticky; top: 0; z-index: 30; background: rgba(10, 10, 15, 0.88); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .bar-inner { max-width: 1280px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 14px; }
+  .wordmark { font-size: 14px; color: var(--vellum); white-space: nowrap; }
+  .wordmark:hover { color: var(--gold-bright); text-decoration: none; }
+  .crumb { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-line); border-radius: 3px; padding: 4px 10px; white-space: nowrap; }
+  .crumb.alt { color: var(--dim); border-color: var(--line); }
+  .lang-btn { margin-inline-start: auto; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--gold-bright); background: var(--bg1); border: 1px solid var(--line); border-radius: 3px; padding: 7px 13px; cursor: pointer; white-space: nowrap; transition: border-color 0.25s ease, box-shadow 0.25s ease; }
+  .lang-btn:hover { border-color: var(--gold); box-shadow: var(--glow-gold); }
+  .lang-btn .globe { color: var(--faint); margin-inline-end: 6px; }
+
+  /* ---------- layout ---------- */
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 36px 24px 80px; }
+
+  .page-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+  .page-head h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 700; }
+  .status-pill {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ok); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 3px; padding: 5px 11px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .status-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+  /* ---------- stat tiles ---------- */
+
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
+
+  .tile {
+    border: 1px solid var(--line); border-top: 2px solid var(--gold);
+    border-radius: 4px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 50%), var(--bg1);
+    padding: 18px 20px 16px;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .tile.t-blue { border-top-color: var(--acc-blue); }
+  .tile.t-epic { border-top-color: var(--r-epic); }
+  .tile.t-leg  { border-top-color: var(--r-legendary); }
+
+  .tile-k { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 10px; }
+  .tile-v { font-family: var(--mono); font-size: 30px; color: var(--vellum); line-height: 1.1; }
+  .tile-v .accent { color: var(--gold); text-shadow: 0 0 14px rgba(251, 191, 36, 0.4); }
+  .tile.t-blue .tile-v .accent { color: var(--acc-blue); text-shadow: 0 0 14px rgba(0, 212, 255, 0.4); }
+  .tile.t-epic .tile-v .accent { color: var(--r-epic); text-shadow: 0 0 14px rgba(163, 53, 238, 0.4); }
+  .tile.t-leg .tile-v .accent { color: var(--r-legendary); text-shadow: 0 0 14px rgba(255, 128, 0, 0.4); }
+  .tile-sub { font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 8px; letter-spacing: 0.04em; }
+
+  .cd { display: flex; gap: 12px; }
+  .cd-seg { text-align: center; }
+  .cd-seg .n { font-family: var(--mono); font-size: 28px; color: var(--r-epic); text-shadow: 0 0 14px rgba(163, 53, 238, 0.4); display: block; line-height: 1.1; }
+  .cd-seg .u { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }
+
+  /* ---------- panels ---------- */
+
+  .panels { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 16px; align-items: start; }
+  @media (max-width: 900px) { .panels { grid-template-columns: 1fr; } }
+
+  .panel { border: 1px solid var(--line); border-radius: 4px; background: var(--bg1); overflow: hidden; }
+
+  .panel-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 18px; border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), transparent);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+  }
+  html[data-lang="ar"] .panel-head { font-family: "Tajawal", sans-serif; letter-spacing: 0; font-size: 12.5px; }
+  .panel-head .dm { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); box-shadow: 0 0 8px var(--gold); }
+
+  .panel-body { padding: 16px 18px 18px; }
+
+  /* roadmap bars */
+  .bar-row { margin-bottom: 14px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .bar-k { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; color: var(--dim); }
+  .bar-v { font-family: var(--mono); font-size: 11px; color: var(--gold); }
+  .bar-track { height: 9px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg0); overflow: hidden; }
+  .bar-fill { height: 100%; width: 0; border-radius: 5px; background: linear-gradient(90deg, #a06d10, var(--gold)); box-shadow: 0 0 12px rgba(251, 191, 36, 0.45); transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+  html[data-lang="ar"] .bar-fill { background: linear-gradient(270deg, #a06d10, var(--gold)); }
+  .bar-row.done .bar-fill { background: var(--gold); }
+  .bar-row.zero .bar-v { color: var(--faint); }
+
+  /* tracks grid */
+  .chips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .chipx {
+    --r: var(--r-uncommon);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em;
+    border: 1px solid var(--line); border-inline-start: 3px solid var(--r);
+    border-radius: 3px; background: var(--bg0);
+    padding: 8px 10px; color: var(--dim);
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  }
+  html[data-lang="ar"] .chipx { font-size: 12px; }
+  .chipx .st { color: var(--r); font-size: 12px; }
+  .chipx.c-rare { --r: var(--r-rare); }
+  .chipx.c-epic { --r: var(--r-epic); }
+  .chipx.c-leg  { --r: var(--r-legendary); }
+
+  /* feed */
+  .feed-list { list-style: none; max-height: 430px; overflow: hidden; }
+  .feed-item { padding: 12px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); animation: slideIn 0.5s ease; }
+  .feed-item:last-child { border-bottom: none; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+  .feed-item .meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin-bottom: 3px; }
+  .feed-item .meta .tag2 { color: var(--gold); }
+  .feed-item .meta .tag2.f-epic { color: var(--r-epic); }
+  .feed-item .meta .tag2.f-leg { color: var(--r-legendary); }
+  .feed-item .meta .tag2.f-rare { color: var(--acc-blue); }
+  .feed-item .txt { font-size: 14px; color: var(--dim); }
+
+  .cta-strip {
+    margin-top: 24px; border: 1px solid var(--gold-line); border-radius: 4px;
+    background: radial-gradient(ellipse 60% 100% at 50% 0%, rgba(251, 191, 36, 0.07), transparent 70%), var(--bg1);
+    padding: 26px; text-align: center;
+  }
+  .cta-strip .t { font-size: 20px; font-weight: 700; margin-bottom: 14px; }
+  .btn {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 13px 26px; border-radius: 3px; border: 1px solid var(--gold);
+    background: var(--gold); color: var(--bg0); cursor: pointer; display: inline-block;
+    box-shadow: var(--glow-gold); transition: box-shadow 0.25s ease, background 0.25s ease;
+  }
+  .btn:hover { background: var(--gold-bright); text-decoration: none; box-shadow: 0 0 30px rgba(251, 191, 36, 0.5); }
+  html[data-lang="ar"] .btn { letter-spacing: 0; font-family: "Tajawal", sans-serif; font-size: 14px; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 24px 42px; }
+  .foot-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .foot-line { font-style: italic; color: var(--faint); font-size: 14px; }
+  html[data-lang="ar"] .foot-line { font-style: normal; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .status-pill .dot, .panel-head .dm { animation: none; }
+    .feed-item { animation: none; }
+    .bar-fill { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-inner">
+    <a class="wordmark" href="index.html">
+      <span class="en">← Chronicles of the Shattered Realm</span>
+      <span class="ar">سجلّات المملكة المتصدّعة ←</span>
+    </a>
+    <span class="crumb"><span class="en">Realm dashboard</span><span class="ar">لوحة المملكة</span></span>
+    <a class="crumb alt" href="docs.html"><span class="en">Codex</span><span class="ar">الموسوعة</span></a>
+    <button class="lang-btn" id="langBtn" type="button" aria-label="Switch language"><span class="globe">◐</span><span id="langBtnLabel">EN</span></button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="page-head">
+    <h1><span class="en">Realm command</span><span class="ar">لوحة قيادة المملكة</span></h1>
+    <span class="status-pill"><span class="dot"></span><span class="en">Realm forge · online</span><span class="ar">مِطرقة المملكة · تعمل</span></span>
+  </div>
+
+  <!-- stat tiles -->
+  <div class="tiles">
+    <div class="tile">
+      <div class="tile-k"><span class="en">Development chapter</span><span class="ar">فصل التطوير</span></div>
+      <div class="tile-v"><span class="accent">III</span> / VI</div>
+      <div class="tile-sub"><span class="en">Playable prototype · being written</span><span class="ar">نموذج قابل للعب · قيد الكتابة</span></div>
+    </div>
+    <div class="tile t-epic">
+      <div class="tile-k"><span class="en">Next Collapse drill</span><span class="ar">تمرين الانهيار القادم</span></div>
+      <div class="cd" id="cd">
+        <span class="cd-seg"><span class="n" id="cdD">–</span><span class="u"><span class="en">days</span><span class="ar">يوم</span></span></span>
+        <span class="cd-seg"><span class="n" id="cdH">–</span><span class="u"><span class="en">hrs</span><span class="ar">ساعة</span></span></span>
+        <span class="cd-seg"><span class="n" id="cdM">–</span><span class="u"><span class="en">min</span><span class="ar">دقيقة</span></span></span>
+        <span class="cd-seg"><span class="n" id="cdS">–</span><span class="u"><span class="en">sec</span><span class="ar">ثانية</span></span></span>
+      </div>
+      <div class="tile-sub"><span class="en">Internal systems test · simulated storm</span><span class="ar">اختبار أنظمة داخلي · عاصفة محاكاة</span></div>
+    </div>
+    <div class="tile t-blue">
+      <div class="tile-k"><span class="en">Chronicles reserved</span><span class="ar">سجلّات محجوزة</span></div>
+      <div class="tile-v"><span class="accent" id="chronCount">0</span> / 100</div>
+      <div class="tile-sub"><span class="en">Alpha seats · first hundred books</span><span class="ar">مقاعد الألفا · الكتب المئة الأولى</span></div>
+    </div>
+    <div class="tile t-leg">
+      <div class="tile-k"><span class="en">Epithets defined</span><span class="ar">الكُنى المعرَّفة</span></div>
+      <div class="tile-v"><span class="accent" id="epithetCount">0</span></div>
+      <div class="tile-sub"><span class="en">World-unique · one holder each</span><span class="ar">يتيمة في العالم · حاملٌ واحد لكلٍّ منها</span></div>
+    </div>
+  </div>
+
+  <div class="panels">
+    <div>
+      <!-- roadmap -->
+      <div class="panel">
+        <div class="panel-head"><span class="dm"></span><span class="en">Road to the Realm · build progress</span><span class="ar">الطريق إلى المملكة · تقدّم البناء</span></div>
+        <div class="panel-body" id="roadPanel">
+          <div class="bar-row done" data-p="100">
+            <div class="bar-top"><span class="bar-k"><span class="en">I · The concept</span><span class="ar">I · المفهوم</span></span><span class="bar-v">100%</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row done" data-p="100">
+            <div class="bar-top"><span class="bar-k"><span class="en">II · Systems design</span><span class="ar">II · تصميم الأنظمة</span></span><span class="bar-v">100%</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row" data-p="42">
+            <div class="bar-top"><span class="bar-k"><span class="en">III · Playable prototype</span><span class="ar">III · نموذج قابل للعب</span></span><span class="bar-v">42%</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row zero" data-p="0">
+            <div class="bar-top"><span class="bar-k"><span class="en">IV · Closed alpha</span><span class="ar">IV · ألفا مغلقة</span></span><span class="bar-v">0%</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row zero" data-p="0">
+            <div class="bar-top"><span class="bar-k"><span class="en">V · Open beta</span><span class="ar">V · بيتا مفتوحة</span></span><span class="bar-v">0%</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row zero" data-p="0">
+            <div class="bar-top"><span class="bar-k"><span class="en">VI · Launch</span><span class="ar">VI · الإطلاق</span></span><span class="bar-v">0%</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- twelve tracks status -->
+      <div class="panel" style="margin-top: 16px;">
+        <div class="panel-head"><span class="dm"></span><span class="en">The twelve tracks · design status</span><span class="ar">المسارات الاثنا عشر · حالة التصميم</span></div>
+        <div class="panel-body">
+          <div class="chips-grid">
+            <span class="chipx"><span><span class="en">Masteries</span><span class="ar">الإتقانات</span></span><span class="st">✓</span></span>
+            <span class="chipx"><span><span class="en">Weapon exp.</span><span class="ar">خبرة السلاح</span></span><span class="st">✓</span></span>
+            <span class="chipx"><span><span class="en">Skill evolution</span><span class="ar">تطوّر المهارات</span></span><span class="st">✓</span></span>
+            <span class="chipx c-rare"><span><span class="en">Class evolution</span><span class="ar">تطوّر الصنف</span></span><span class="st">✓</span></span>
+            <span class="chipx c-rare"><span><span class="en">Titles</span><span class="ar">الألقاب</span></span><span class="st">✓</span></span>
+            <span class="chipx c-rare"><span><span class="en">Reputation</span><span class="ar">السمعة</span></span><span class="st">✓</span></span>
+            <span class="chipx c-epic"><span><span class="en">Knowledge</span><span class="ar">المعرفة</span></span><span class="st">✓</span></span>
+            <span class="chipx c-epic"><span><span class="en">Exploration</span><span class="ar">الاستكشاف</span></span><span class="st">✓</span></span>
+            <span class="chipx c-epic"><span><span class="en">Story choices</span><span class="ar">خيارات القصة</span></span><span class="st">✓</span></span>
+            <span class="chipx c-leg"><span><span class="en">Boss achievements</span><span class="ar">إنجازات الزعماء</span></span><span class="st">✓</span></span>
+            <span class="chipx c-leg"><span><span class="en">Clan reputation</span><span class="ar">سمعة العشيرة</span></span><span class="st">✓</span></span>
+            <span class="chipx c-leg"><span><span class="en">World contribution</span><span class="ar">الإسهام في العالم</span></span><span class="st">✓</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- live chronicle feed -->
+    <div class="panel">
+      <div class="panel-head"><span class="dm"></span><span class="en">Forge feed · live</span><span class="ar">بثّ المِطرقة · مباشر</span></div>
+      <ul class="feed-list" id="feed"></ul>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <div class="t"><span class="en">Want your name in the first hundred books?</span><span class="ar">تبغى اسمك في الكتب المئة الأولى؟</span></div>
+    <a class="btn" href="index.html#community"><span class="en">Join the playtest</span><span class="ar">انضم للتجربة</span></a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <span class="label"><span class="en">Chronicles of the Shattered Realm · Dashboard · MMXXVI</span><span class="ar">سجلّات المملكة المتصدّعة · اللوحة · ٢٠٢٦</span></span>
+    <span class="foot-line"><span class="en">Numbers on this page describe the build, not your character. Your character has no numbers.</span><span class="ar">الأرقام في هذه الصفحة تصف البناء، لا شخصيتك. شخصيتك بلا أرقام.</span></span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var TITLES = { en: "Realm Dashboard — Chronicles of the Shattered Realm", ar: "اللوحة — سجلّات المملكة المتصدّعة" };
+    var cur = "ar";
+    try { cur = localStorage.getItem("csr-lang") || "ar"; } catch (e) {}
+    if (cur !== "ar" && cur !== "en") cur = "ar";
+
+    var langBtnLabel = document.getElementById("langBtnLabel");
+
+    function setLang(l) {
+      cur = l;
+      var root = document.documentElement;
+      root.dataset.lang = l;
+      root.lang = l;
+      root.dir = l === "ar" ? "rtl" : "ltr";
+      try { localStorage.setItem("csr-lang", l); } catch (e) {}
+      langBtnLabel.textContent = l === "ar" ? "EN" : "عربي";
+      document.title = TITLES[l];
+      renderFeed();
+    }
+
+    document.getElementById("langBtn").addEventListener("click", function () {
+      setLang(cur === "ar" ? "en" : "ar");
+    });
+
+    /* countdown to next simulated Collapse: every 21 days from a fixed epoch */
+    var EPOCH = Date.UTC(2026, 7, 20, 18, 0, 0); /* 2026-08-20 18:00 UTC */
+    var PERIOD = 21 * 24 * 3600 * 1000;
+    function nextCollapse() {
+      var now = Date.now();
+      var t = EPOCH;
+      while (t <= now) t += PERIOD;
+      return t;
+    }
+    var cdD = document.getElementById("cdD"), cdH = document.getElementById("cdH"),
+        cdM = document.getElementById("cdM"), cdS = document.getElementById("cdS");
+    function tick() {
+      var ms = nextCollapse() - Date.now();
+      var s = Math.floor(ms / 1000);
+      cdD.textContent = Math.floor(s / 86400);
+      cdH.textContent = String(Math.floor(s % 86400 / 3600)).padStart(2, "0");
+      cdM.textContent = String(Math.floor(s % 3600 / 60)).padStart(2, "0");
+      cdS.textContent = String(s % 60).padStart(2, "0");
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    /* animated counters */
+    function countUp(el, target, dur) {
+      if (reduced) { el.textContent = target; return; }
+      var t0 = null;
+      function step(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1);
+        el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    countUp(document.getElementById("chronCount"), 27, 1400);
+    countUp(document.getElementById("epithetCount"), 61, 1600);
+
+    /* roadmap bars animate in */
+    setTimeout(function () {
+      document.querySelectorAll(".bar-row").forEach(function (r) {
+        r.querySelector(".bar-fill").style.width = r.dataset.p + "%";
+      });
+    }, reduced ? 0 : 250);
+
+    /* forge feed — build log as chronicle entries */
+    var FEED = [
+      { tag: "leg",  en: ["Deed · systems",   "The two design laws carved above the team's door. Literally."],
+                     ar: ["مأثرة · الأنظمة",   "قانونا التصميم نُحتا فوق باب الفريق. حرفيًا."] },
+      { tag: "epic", en: ["Deed · prototype", "First wolf killed in-engine. It wrote. Everyone shouted."],
+                     ar: ["مأثرة · النموذج",  "أول ذئب يُقتل داخل المحرك. وكُتب المدخل. صرخ الجميع."] },
+      { tag: "rare", en: ["Mark · combat",    "Parry timing tuned for the eleventh time. The eleventh felt right."],
+                     ar: ["علامة · القتال",   "توقيت الصدّ عُدّل للمرة الحادية عشرة. الحادية عشرة كانت الصحيحة."] },
+      { tag: "gold", en: ["Mark · world",     "The Sunken Descent greyboxed end to end. It is longer than we feared."],
+                     ar: ["علامة · العالم",   "النزول الغارق بُني هيكليًا من أوله لآخره. أطول مما خشينا."] },
+      { tag: "epic", en: ["Deed · inscription", "Waystone loop playable: act, carry, reach, inscribe. The core verb works."],
+                     ar: ["مأثرة · التدوين",  "حلقة حجر الطريق قابلة للعب: افعل، احمل، اوصل، دوِّن. الفعل الجوهري يعمل."] },
+      { tag: "rare", en: ["Mark · chronicle", "Chronicle page renders as a book, not a spreadsheet. As decreed."],
+                     ar: ["علامة · السجلّ",   "صفحة السجلّ تُعرض ككتاب، لا كجدول أرقام. كما نصّ القانون."] },
+      { tag: "gold", en: ["Mark · city",      "Anchorhold's six districts named. The Hollowmarket asked to stay unnamed."],
+                     ar: ["علامة · المدينة",  "أحياء أنكورهولد الستة سُمّيت. سوق الجوف طلب أن يبقى بلا اسم."] },
+      { tag: "leg",  en: ["Deed · epithets",  "Sixty-one Epithets defined. Sixty-one arguments about which is best."],
+                     ar: ["مأثرة · الكُنى",   "واحدة وستون كُنية عُرّفت. وواحد وستون جدالًا حول أيها الأفضل."] }
+    ];
+
+    var feedEl = document.getElementById("feed");
+    var feedIdx = 0;
+    var shown = [];
+
+    function feedItemHtml(item) {
+      var loc = item[cur];
+      var cls = item.tag === "leg" ? "f-leg" : item.tag === "epic" ? "f-epic" : item.tag === "rare" ? "f-rare" : "";
+      return '<div class="meta"><span class="tag2 ' + cls + '">◆ ' + loc[0] + "</span></div><div class='txt'>" + loc[1] + "</div>";
+    }
+
+    function renderFeed() {
+      feedEl.innerHTML = "";
+      shown.forEach(function (item) {
+        var li = document.createElement("li");
+        li.className = "feed-item";
+        li.style.animation = "none";
+        li.innerHTML = feedItemHtml(item);
+        feedEl.appendChild(li);
+      });
+    }
+
+    function pushFeed() {
+      var item = FEED[feedIdx % FEED.length];
+      feedIdx++;
+      shown.unshift(item);
+      if (shown.length > 7) shown.pop();
+      var li = document.createElement("li");
+      li.className = "feed-item";
+      li.innerHTML = feedItemHtml(item);
+      feedEl.insertBefore(li, feedEl.firstChild);
+      while (feedEl.children.length > 7) feedEl.removeChild(feedEl.lastChild);
+    }
+
+    pushFeed(); pushFeed(); pushFeed();
+    setInterval(pushFeed, 5000);
+
+    setLang(cur);
+  })();
+</script>
+</body>
+</html>

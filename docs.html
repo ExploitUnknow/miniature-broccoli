@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>الموسوعة — سجلّات المملكة المتصدّعة</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='9' y='9' width='14' height='14' transform='rotate(45 16 16)' fill='%23fbbf24'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg0: #0a0a0f;
+    --bg1: #12121a;
+    --bg2: #1a1a24;
+    --line: #2a2a3a;
+    --line-soft: rgba(42, 42, 58, 0.6);
+    --vellum: #e5e5ea;
+    --dim: #a0a0ad;
+    --faint: #6a6a78;
+    --gold: #fbbf24;
+    --gold-bright: #fde28a;
+    --gold-line: rgba(251, 191, 36, 0.22);
+    --gold-soft: rgba(251, 191, 36, 0.07);
+    --seal: #ef4444;
+    --seal-dim: rgba(239, 68, 68, 0.55);
+    --r-common: #9d9d9d;
+    --r-uncommon: #1eff00;
+    --r-rare: #0070dd;
+    --r-epic: #a335ee;
+    --r-legendary: #ff8000;
+    --acc-blue: #00d4ff;
+    --serif: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --display: "Cinzel", Georgia, serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    --glow-gold: 0 0 20px rgba(251, 191, 36, 0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 0%, rgba(163, 53, 238, 0.05), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 85% 10%, rgba(251, 191, 36, 0.04), transparent 60%),
+      var(--bg0);
+    color: var(--vellum);
+    font-family: var(--serif);
+    font-size: 16.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: rgba(251, 191, 36, 0.25); }
+
+  html[data-lang="ar"] .en { display: none !important; }
+  html[data-lang="en"] .ar { display: none !important; }
+
+  html[data-lang="ar"] body { font-family: "Tajawal", "Segoe UI", Tahoma, sans-serif; line-height: 1.85; }
+  h1, h2, h3, h4, .wordmark { font-family: var(--display); }
+  html[data-lang="ar"] :is(h1, h2, .wordmark, blockquote) { font-family: "Amiri", serif; }
+  html[data-lang="ar"] :is(h3, h4) { font-family: "Tajawal", sans-serif; font-weight: 700; }
+  html[data-lang="ar"] :is(.label, .btn, .chip, .toc a, .stat-k, .stat-v, .tag, .lang-btn, .crumb,
+    .entry-line .meta, .risk, .tip-type, .tip-sub, .faq-q .label) {
+    letter-spacing: 0 !important;
+    font-family: "Tajawal", sans-serif;
+  }
+
+  a { color: var(--gold-bright); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ---------- top bar ---------- */
+
+  .bar {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(10, 10, 15, 0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bar-inner {
+    max-width: 1280px; margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .wordmark { font-size: 14px; color: var(--vellum); white-space: nowrap; }
+  .wordmark:hover { color: var(--gold-bright); text-decoration: none; }
+
+  .crumb { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-line); border-radius: 3px; padding: 4px 10px; white-space: nowrap; }
+
+  .lang-btn {
+    margin-inline-start: auto;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+    color: var(--gold-bright); background: var(--bg1);
+    border: 1px solid var(--line); border-radius: 3px;
+    padding: 7px 13px; cursor: pointer; white-space: nowrap;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .lang-btn:hover { border-color: var(--gold); box-shadow: var(--glow-gold); }
+  .lang-btn .globe { color: var(--faint); margin-inline-end: 6px; }
+
+  /* ---------- layout ---------- */
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 44px; }
+
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; gap: 0; } }
+
+  /* ---------- quest-log sidebar ---------- */
+
+  .toc {
+    position: sticky; top: 76px;
+    align-self: start;
+    margin-top: 40px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: linear-gradient(180deg, var(--bg2), var(--bg1));
+    padding: 18px 0 10px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  .toc .toc-head {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--gold); padding: 0 18px 12px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 8px;
+  }
+  html[data-lang="ar"] .toc .toc-head { font-family: "Tajawal", sans-serif; letter-spacing: 0; font-size: 12px; }
+
+  .toc .toc-head .dot { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); box-shadow: 0 0 8px var(--gold); }
+
+  .toc ul { list-style: none; padding: 10px 0; }
+
+  .toc a {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
+    color: var(--dim); padding: 8px 18px;
+    border-inline-start: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+
+  html[data-lang="ar"] .toc a { font-size: 13.5px; }
+
+  .toc a .num { color: var(--faint); font-size: 10px; min-width: 20px; }
+  .toc a:hover { color: var(--vellum); text-decoration: none; background: rgba(251, 191, 36, 0.04); }
+  .toc a.active { color: var(--gold-bright); border-inline-start-color: var(--gold); background: var(--gold-soft); }
+  .toc a.active .num { color: var(--gold); }
+
+  @media (max-width: 900px) {
+    .toc { position: static; max-height: none; margin-top: 24px; }
+  }
+
+  /* ---------- content ---------- */
+
+  .content { padding: 40px 0 80px; min-width: 0; }
+
+  .page-head { margin-bottom: 10px; }
+
+  .page-head h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 700; letter-spacing: 0.02em; }
+  html[data-lang="ar"] .page-head h1 { letter-spacing: 0; }
+
+  .page-head .sub { color: var(--dim); max-width: 70ch; margin-top: 10px; font-size: 17px; }
+
+  .page-head .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+
+  .chip {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--gold-line); border-radius: 3px;
+    padding: 5px 11px; background: rgba(251, 191, 36, 0.04);
+  }
+
+  section.doc { padding-top: 64px; }
+
+  .sec-head {
+    display: flex; align-items: baseline; gap: 14px;
+    border-bottom: 1px solid var(--gold-line);
+    padding-bottom: 12px; margin-bottom: 28px;
+  }
+
+  .sec-head .num { font-family: var(--display); font-size: 22px; color: var(--gold); text-shadow: 0 0 16px rgba(251, 191, 36, 0.4); }
+  .sec-head h2 { font-size: clamp(22px, 3.4vw, 32px); font-weight: 600; }
+
+  .doc p { max-width: 72ch; color: var(--vellum); }
+  .doc p + p { margin-top: 1em; }
+  .doc p.muted { color: var(--dim); }
+
+  .doc blockquote {
+    margin: 26px 0; padding: 20px 26px;
+    border-inline-start: 2px solid var(--gold);
+    background: linear-gradient(90deg, var(--gold-soft), transparent 70%);
+    font-size: 19px; font-style: italic; max-width: 60ch;
+  }
+  html[data-lang="ar"] .doc blockquote { font-style: normal; background: linear-gradient(270deg, var(--gold-soft), transparent 70%); }
+
+  /* ---------- MMO tooltip cards ---------- */
+
+  .tip {
+    --r: var(--gold);
+    --r-glow: rgba(251, 191, 36, 0.22);
+    border: 1px solid var(--r);
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 40%), var(--bg1);
+    padding: 0;
+    margin: 18px 0;
+    box-shadow: 0 0 18px var(--r-glow), inset 0 0 30px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+
+  .tip.r-common    { --r: var(--r-common);    --r-glow: rgba(157, 157, 157, 0.15); }
+  .tip.r-uncommon  { --r: var(--r-uncommon);  --r-glow: rgba(30, 255, 0, 0.14); }
+  .tip.r-rare      { --r: var(--r-rare);      --r-glow: rgba(0, 112, 221, 0.25); }
+  .tip.r-epic      { --r: var(--r-epic);      --r-glow: rgba(163, 53, 238, 0.25); }
+  .tip.r-legendary { --r: var(--r-legendary); --r-glow: rgba(255, 128, 0, 0.25); }
+
+  .tip-head {
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), transparent);
+  }
+
+  .tip-name { font-size: 18px; font-weight: 700; color: var(--r); text-shadow: 0 0 12px var(--r-glow); font-family: "Tajawal", var(--display), sans-serif; }
+  html[data-lang="en"] .tip-name { font-family: var(--display); }
+
+  .tip-type { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin-top: 3px; }
+  .tip-sub { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; color: var(--faint); margin-top: 2px; }
+
+  .tip-body { padding: 12px 18px 16px; }
+  .tip-body p { font-size: 14.5px; color: var(--dim); max-width: none; }
+  .tip-body p strong { color: var(--vellum); }
+
+  .stats { list-style: none; margin: 10px 0 4px; }
+  .stats li { display: flex; justify-content: space-between; gap: 16px; padding: 5px 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.05); font-size: 13.5px; }
+  .stats li:last-child { border-bottom: none; }
+  .stat-k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+  .stat-v { font-family: var(--mono); font-size: 12px; color: var(--vellum); text-align: end; }
+  .stat-v.gold { color: var(--gold); }
+  .stat-v.red { color: var(--seal); }
+  .stat-v.blue { color: var(--acc-blue); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--faint); border: 1px solid var(--line-soft); border-radius: 2px; padding: 2px 7px;
+  }
+  html[data-lang="ar"] .tag { font-size: 11px; }
+  .tag.gold { color: var(--gold); border-color: var(--gold-line); }
+
+  .tip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 8px; }
+  .tip-grid .tip { margin: 0; }
+
+  /* ---------- chronicle log mock ---------- */
+
+  .chron-log {
+    border: 1px solid var(--gold-line); border-radius: 4px;
+    background: var(--bg1); margin: 24px 0;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .chron-log .log-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px; border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+  }
+  html[data-lang="ar"] .chron-log .log-head { font-family: "Tajawal", sans-serif; letter-spacing: 0; font-size: 12.5px; }
+
+  .chron-log .log-head .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); animation: pulse 2.4s ease-in-out infinite; }
+
+  @keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+  .entry-line { padding: 12px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+  .entry-line:last-child { border-bottom: none; }
+  .entry-line .meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin-bottom: 3px; }
+  .entry-line .meta .y { color: var(--gold); }
+  .entry-line .txt { font-size: 14.5px; color: var(--dim); }
+  .entry-line.hot .txt { color: var(--vellum); }
+  .entry-line.hot { background: linear-gradient(90deg, var(--gold-soft), transparent 60%); }
+  html[data-lang="ar"] .entry-line.hot { background: linear-gradient(270deg, var(--gold-soft), transparent 60%); }
+
+  /* ---------- flow steps ---------- */
+
+  .flow { display: flex; flex-wrap: wrap; gap: 0; align-items: stretch; margin: 26px 0; }
+
+  .flow-step {
+    flex: 1 1 150px;
+    border: 1px solid var(--line); border-radius: 4px;
+    background: var(--bg1); padding: 16px;
+    text-align: center; position: relative; margin: 0 18px 18px 0;
+  }
+  html[data-lang="ar"] .flow-step { margin: 0 0 18px 18px; }
+
+  .flow-step:last-child { margin-inline-end: 0; }
+
+  .flow-step::after {
+    content: "▶"; position: absolute; top: 50%;
+    inset-inline-end: -15px; transform: translateY(-50%);
+    color: var(--gold); font-size: 10px;
+  }
+  html[data-lang="ar"] .flow-step::after { content: "◀"; }
+  .flow-step:last-child::after { display: none; }
+
+  .flow-step .fs-num { font-family: var(--mono); font-size: 10px; color: var(--gold); letter-spacing: 0.2em; display: block; margin-bottom: 8px; }
+  .flow-step .fs-t { font-size: 14.5px; font-weight: 700; }
+  .flow-step .fs-d { font-size: 12.5px; color: var(--faint); margin-top: 6px; }
+  .flow-step.danger { border-color: var(--seal-dim); }
+  .flow-step.danger .fs-num { color: var(--seal); }
+  .flow-step.safe { border-color: var(--gold); box-shadow: var(--glow-gold); }
+
+  /* ---------- tables ---------- */
+
+  .tbl-wrap { overflow-x: auto; margin: 20px 0; border: 1px solid var(--line); border-radius: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--bg1); font-size: 14px; min-width: 560px; }
+
+  th {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); text-align: start; padding: 12px 16px;
+    border-bottom: 1px solid var(--gold-line);
+    background: rgba(0, 0, 0, 0.25);
+  }
+  html[data-lang="ar"] th { font-family: "Tajawal", sans-serif; letter-spacing: 0; font-size: 12.5px; }
+
+  td { padding: 11px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); color: var(--dim); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.k { color: var(--vellum); font-weight: 700; white-space: nowrap; }
+  tr:hover td { background: rgba(251, 191, 36, 0.025); }
+
+  .risk { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; }
+  .risk.lo { color: var(--r-uncommon); }
+  .risk.md { color: var(--gold); }
+  .risk.hi { color: var(--r-legendary); }
+  .risk.xx { color: var(--seal); }
+
+  /* ---------- callouts ---------- */
+
+  .callout {
+    border: 1px solid var(--line); border-inline-start: 3px solid var(--gold);
+    border-radius: 4px; background: var(--bg1);
+    padding: 16px 20px; margin: 20px 0; max-width: 76ch;
+  }
+  .callout.warn { border-inline-start-color: var(--seal); }
+  .callout .co-t { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 8px; }
+  html[data-lang="ar"] .callout .co-t { font-family: "Tajawal", sans-serif; letter-spacing: 0; font-size: 12px; }
+  .callout.warn .co-t { color: var(--seal); }
+  .callout p { font-size: 14.5px; color: var(--dim); }
+
+  /* ---------- FAQ ---------- */
+
+  .faq-item { border: 1px solid var(--line); border-radius: 4px; background: var(--bg1); margin-bottom: 12px; overflow: hidden; }
+  .faq-q {
+    width: 100%; text-align: start; cursor: pointer;
+    background: none; border: none; color: var(--vellum);
+    font-family: inherit; font-size: 15.5px; font-weight: 700;
+    padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+  }
+  .faq-q:hover { background: rgba(251, 191, 36, 0.03); }
+  .faq-q .caret { color: var(--gold); font-size: 11px; transition: transform 0.25s ease; }
+  .faq-item.open .faq-q .caret { transform: rotate(90deg); }
+  html[data-lang="ar"] .faq-q .caret { transform: rotate(180deg); }
+  html[data-lang="ar"] .faq-item.open .faq-q .caret { transform: rotate(90deg); }
+  .faq-a { display: none; padding: 0 20px 18px; color: var(--dim); font-size: 14.5px; }
+  .faq-a p { max-width: 76ch; }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ---------- footer ---------- */
+
+  footer { border-top: 1px solid var(--line); padding: 32px 24px 44px; margin-top: 40px; }
+  .foot-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .foot-line { font-style: italic; color: var(--faint); font-size: 14px; }
+  html[data-lang="ar"] .foot-line { font-style: normal; }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.vis { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .chron-log .log-head .dot { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-inner">
+    <a class="wordmark" href="index.html">
+      <span class="en">← Chronicles of the Shattered Realm</span>
+      <span class="ar">سجلّات المملكة المتصدّعة ←</span>
+    </a>
+    <span class="crumb"><span class="en">Codex · Game systems</span><span class="ar">الموسوعة · أنظمة اللعبة</span></span>
+    <a class="crumb" href="dashboard.html" style="color: var(--dim); border-color: var(--line);"><span class="en">Dashboard</span><span class="ar">اللوحة</span></a>
+    <button class="lang-btn" id="langBtn" type="button" aria-label="Switch language"><span class="globe">◐</span><span id="langBtnLabel">EN</span></button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- quest-log sidebar -->
+  <aside class="toc" id="toc">
+    <div class="toc-head"><span class="dot"></span><span class="en">Codex chapters</span><span class="ar">فصول الموسوعة</span></div>
+    <ul>
+      <li><a href="#overview"><span class="num">01</span><span class="en">Overview</span><span class="ar">نظرة عامة</span></a></li>
+      <li><a href="#chronicle"><span class="num">02</span><span class="en">The Chronicle</span><span class="ar">السجلّ</span></a></li>
+      <li><a href="#inscription"><span class="num">03</span><span class="en">Inscription</span><span class="ar">التدوين</span></a></li>
+      <li><a href="#death"><span class="num">04</span><span class="en">Death &amp; Echoes</span><span class="ar">الموت والأصداء</span></a></li>
+      <li><a href="#tracks"><span class="num">05</span><span class="en">The twelve tracks</span><span class="ar">المسارات الاثنا عشر</span></a></li>
+      <li><a href="#attunement"><span class="num">06</span><span class="en">Attunement</span><span class="ar">التناغم</span></a></li>
+      <li><a href="#city"><span class="num">07</span><span class="en">Anchorhold</span><span class="ar">أنكورهولد</span></a></li>
+      <li><a href="#activities"><span class="num">08</span><span class="en">Activities</span><span class="ar">الأنشطة</span></a></li>
+      <li><a href="#economy"><span class="num">09</span><span class="en">Economy</span><span class="ar">الاقتصاد</span></a></li>
+      <li><a href="#clans"><span class="num">10</span><span class="en">Clans</span><span class="ar">العشائر</span></a></li>
+      <li><a href="#laws"><span class="num">11</span><span class="en">The two laws</span><span class="ar">القانونان</span></a></li>
+      <li><a href="#faq"><span class="num">12</span><span class="en">FAQ</span><span class="ar">أسئلة شائعة</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+
+    <div class="page-head">
+      <span class="label"><span class="en">Game systems documentation</span><span class="ar">توثيق أنظمة اللعبة</span></span>
+      <h1><span class="en">The Codex</span><span class="ar">الموسوعة</span></h1>
+      <p class="sub en">Everything the Realm knows about itself: how the Chronicle works, what death costs, where power lives, and why there is no number anywhere in this game that makes you stronger.</p>
+      <p class="sub ar">كل ما تعرفه المملكة عن نفسها: كيف يعمل السجلّ، وماذا يكلّف الموت، وأين تسكن القوة، ولماذا لا يوجد في هذه اللعبة رقمٌ واحد يجعلك أقوى.</p>
+      <div class="chips">
+        <span class="chip"><span class="en">One identity</span><span class="ar">هوية واحدة</span></span>
+        <span class="chip"><span class="en">One world</span><span class="ar">عالم واحد</span></span>
+        <span class="chip"><span class="en">No wipes</span><span class="ar">لا مسح للتقدّم</span></span>
+        <span class="chip"><span class="en">No levels</span><span class="ar">لا مستويات</span></span>
+      </div>
+    </div>
+
+    <!-- 01 Overview -->
+    <section class="doc reveal" id="overview">
+      <div class="sec-head"><span class="num">01</span><h2><span class="en">Overview</span><span class="ar">نظرة عامة</span></h2></div>
+      <p class="en">Chronicles of the Shattered Realm is a shared-world online action RPG. You create <strong>one character</strong>, and that character lives in <strong>one persistent world</strong> for as long as the game exists. There are no seasons that wipe you, no level cap that ends you, and no alternate characters that fragment you.</p>
+      <p class="ar">«سجلّات المملكة المتصدّعة» لعبة أكشن آر بي جي أونلاين بعالم مشترك. تنشئ <strong>شخصية واحدة</strong>، وتعيش هذه الشخصية في <strong>عالم دائم واحد</strong> ما دامت اللعبة قائمة. لا مواسم تمسحك، ولا سقف مستويات يُنهيك، ولا شخصيات بديلة تشتّتك.</p>
+      <p class="en">Instead of experience points, your character owns a <strong>Chronicle</strong> — an append-only book that records everything you have done that was worth remembering. The Chronicle is at once your progression, your identity, your reputation, and — literally — the server's event log for your character.</p>
+      <p class="ar">بدلًا من نقاط الخبرة، تملك شخصيتك <strong>سجلًّا</strong> — كتابًا لا يقبل إلا الإضافة، يدوّن كل ما فعلتَه واستحق أن يُذكر. السجلّ هو تقدّمك وهويتك وسمعتك في آنٍ واحد — وهو، حرفيًا، دفتر أحداث الخادم لشخصيتك.</p>
+      <blockquote>
+        <span class="en">You do not out-level other players. You <em>out-live</em> them.</span>
+        <span class="ar">أنت لا تتفوّق على الآخرين بالمستويات — بل تعيش أطول منهم.</span>
+      </blockquote>
+      <p class="muted en">The rest of this Codex explains each system in the order you will meet it in play.</p>
+      <p class="muted ar">بقية هذه الموسوعة تشرح كل نظام بالترتيب الذي ستقابله به داخل اللعبة.</p>
+    </section>
+
+    <!-- 02 Chronicle -->
+    <section class="doc reveal" id="chronicle">
+      <div class="sec-head"><span class="num">02</span><h2><span class="en">The Chronicle</span><span class="ar">السجلّ</span></h2></div>
+      <p class="en">Every meaningful act writes an <strong>entry</strong>. An entry has a timestamp, a place, the conditions under which it happened, and — sometimes — a reward attached: an Insight, a right, an access. Entries are never deleted and never edited. Your Chronicle at hour three thousand contains your first clumsy night in the Realm, unchanged.</p>
+      <p class="ar">كل فعلٍ ذي معنى يكتب <strong>مدخلًا</strong>. للمدخل وقت، ومكان، وظروفٌ حدث فيها، وأحيانًا مكافأة مرفقة: بصيرة، أو حق، أو وصول. المداخل لا تُحذف أبدًا ولا تُعدَّل. سجلُّك في الساعة الثلاثة آلاف يحوي ليلتك الأولى الخرقاء في المملكة، كما هي.</p>
+
+      <div class="chron-log" aria-label="Chronicle excerpt">
+        <div class="log-head"><span class="dot"></span><span class="en">Chronicle · Kaelen the Stormseer · excerpt</span><span class="ar">السجلّ · كايلن راصد العواصف · مقتطف</span></div>
+        <div class="entry-line">
+          <div class="meta"><span class="y">Y1 · D12</span> · <span class="en">Anchorhold gates</span><span class="ar">بوابات أنكورهولد</span></div>
+          <div class="txt en">Entered the Realm. Owned nothing. Feared everything.</div>
+          <div class="txt ar">دخل المملكة. لا يملك شيئًا. يخاف كلَّ شيء.</div>
+        </div>
+        <div class="entry-line">
+          <div class="meta"><span class="y">Y1 · D77</span> · <span class="en">The Sunken Descent</span><span class="ar">النزول الغارق</span></div>
+          <div class="txt en">First to map the flooded galleries. Sold the chart for a winter's rent.</div>
+          <div class="txt ar">أول من خرّط الأروقة الغارقة. باع الخريطة بإيجار شتاءٍ كامل.</div>
+        </div>
+        <div class="entry-line hot">
+          <div class="meta"><span class="y">Y2 · D3</span> · <span class="en">Stormwall ridge · during the Collapse</span><span class="ar">حافة جدار العاصفة · أثناء الانهيار</span></div>
+          <div class="txt en">Held the last Waystone alight while nineteen strangers reached the gate. Epithet earned: <strong>Lightkeeper</strong> — world-unique, currently held.</div>
+          <div class="txt ar">أبقى آخر حجر طريق مضيئًا حتى بلغ تسعة عشر غريبًا البوابة. كُنية مكتسبة: <strong>حارس الضياء</strong> — يتيمة في العالم، بحوزته الآن.</div>
+        </div>
+      </div>
+
+      <p class="en">Entries come in three weights: <strong>Marks</strong> (common, quiet lines), <strong>Deeds</strong> (rare, condition-heavy lines that usually carry rewards), and <strong>Epithets</strong> (world-unique lines that only one character in the entire Realm may hold at a time — and that can be taken from you).</p>
+      <p class="ar">المداخل ثلاثة أوزان: <strong>علامات</strong> (شائعة، سطور هادئة)، و<strong>مآثر</strong> (نادرة، مثقلة بالشروط وتحمل مكافآت غالبًا)، و<strong>كُنى</strong> (سطور يتيمة في العالم لا يحملها إلا شخصية واحدة في المملكة كلها في كل وقت — ويمكن أن تُنتزع منك).</p>
+
+      <div class="callout">
+        <span class="co-t"><span class="en">Anti-grind rule</span><span class="ar">قاعدة مكافحة الطحن</span></span>
+        <p class="en">The Chronicle only records what it has not recorded before. Your nine-hundredth wolf writes nothing — but it still drops materials. Repetition produces economy; novelty and consequence produce power.</p>
+        <p class="ar">السجلّ لا يدوّن إلا ما لم يدوّنه من قبل. ذئبك التسعمئة لا يكتب شيئًا — لكنه ما يزال يُسقط موادًا. التكرار يُنتج اقتصادًا؛ والجِدّة والعاقبة تُنتجان قوة.</p>
+      </div>
+    </section>
+
+    <!-- 03 Inscription -->
+    <section class="doc reveal" id="inscription">
+      <div class="sec-head"><span class="num">03</span><h2><span class="en">Unwritten pages &amp; inscription</span><span class="ar">الصفحات غير المدوَّنة والتدوين</span></h2></div>
+      <p class="en">Nothing you do outside the city is permanent by itself. Acts generate <strong>Unwritten entries</strong> — provisional pages you carry with you. They become part of your Chronicle only when <strong>inscribed</strong>. Until then, they can be lost.</p>
+      <p class="ar">لا شيء تفعله خارج المدينة دائمٌ بذاته. الأفعال تولّد <strong>مداخل غير مدوَّنة</strong> — صفحات مؤقتة تحملها معك. ولا تصبح جزءًا من سجلّك إلا حين <strong>تُدوَّن</strong>. وإلى ذلك الحين، يمكن أن تضيع.</p>
+
+      <div class="flow">
+        <div class="flow-step">
+          <span class="fs-num">1</span>
+          <div class="fs-t"><span class="en">Act</span><span class="ar">افعل</span></div>
+          <div class="fs-d"><span class="en">Fight, explore, solve, survive</span><span class="ar">قاتل، استكشف، حُلّ، انجُ</span></div>
+        </div>
+        <div class="flow-step">
+          <span class="fs-num">2</span>
+          <div class="fs-t"><span class="en">Carry</span><span class="ar">احمل</span></div>
+          <div class="fs-d"><span class="en">Unwritten pages, at risk</span><span class="ar">صفحات غير مدوَّنة، معرَّضة للضياع</span></div>
+        </div>
+        <div class="flow-step danger">
+          <span class="fs-num">3</span>
+          <div class="fs-t"><span class="en">Reach a Waystone</span><span class="ar">اوصل لحجر طريق</span></div>
+          <div class="fs-d"><span class="en">Deep in the world · risky · instant</span><span class="ar">في عمق العالم · خطِر · فوري</span></div>
+        </div>
+        <div class="flow-step safe">
+          <span class="fs-num">4</span>
+          <div class="fs-t"><span class="en">Inscribe</span><span class="ar">دوِّن</span></div>
+          <div class="fs-d"><span class="en">Permanent. Forever. Yours.</span><span class="ar">دائم. للأبد. ملكك.</span></div>
+        </div>
+      </div>
+
+      <p class="en"><strong>Waystones</strong> are inscription points scattered through the wild — ancient, glowing, and usually somewhere inconvenient. Inscribing at a Waystone is instant but public: the light is visible from far away, and other players know someone is standing still with pages to lose. Returning to the city instead is always safe, but the journey back is yours to survive.</p>
+      <p class="ar"><strong>أحجار الطريق</strong> نقاط تدوين متناثرة في البراري — قديمة، متوهجة، وفي مكانٍ غير مريح غالبًا. التدوين عند حجر الطريق فوري لكنه علني: ضوؤه يُرى من بعيد، والآخرون يعرفون أن أحدهم واقفٌ بلا حراك ومعه صفحات يمكن أن يخسرها. أما العودة إلى المدينة فآمنة دائمًا، لكن رحلة العودة عليك أن تنجو منها بنفسك.</p>
+
+      <div class="callout">
+        <span class="co-t"><span class="en">The core promise</span><span class="ar">الوعد الجوهري</span></span>
+        <p class="en"><strong>Failure costs you the last hour, never the last year.</strong> You can lose Unwritten pages. You can never lose an inscribed one — not to death, not to a patch, not to a season.</p>
+        <p class="ar"><strong>الفشل يكلّفك الساعة الأخيرة، لا السنة الأخيرة.</strong> يمكن أن تخسر صفحات غير مدوَّنة. أما المدوَّنة فلا تخسرها أبدًا — لا بموت، ولا بتحديث، ولا بموسم.</p>
+      </div>
+    </section>
+
+    <!-- 04 Death -->
+    <section class="doc reveal" id="death">
+      <div class="sec-head"><span class="num">04</span><h2><span class="en">Death &amp; Echoes</span><span class="ar">الموت والأصداء</span></h2></div>
+      <p class="en">Death is meaningful but never catastrophic. When you fall in the wild:</p>
+      <p class="ar">الموت ذو معنى، لكنه ليس كارثيًا أبدًا. حين تسقط في البراري:</p>
+
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th><span class="en">What</span><span class="ar">ماذا</span></th>
+          <th><span class="en">On death</span><span class="ar">عند الموت</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="k"><span class="en">Inscribed Chronicle</span><span class="ar">السجلّ المدوَّن</span></td><td><span class="en"><strong>Untouched.</strong> Always. This is the law the game is built on.</span><span class="ar"><strong>لا يُمَسّ.</strong> دائمًا. هذا هو القانون الذي بُنيت عليه اللعبة.</span></td></tr>
+          <tr><td class="k"><span class="en">Unwritten pages</span><span class="ar">الصفحات غير المدوَّنة</span></td><td><span class="en"><strong>Lost.</strong> The hour is gone; the year is safe.</span><span class="ar"><strong>تضيع.</strong> ذهبت الساعة؛ وسلمت السنة.</span></td></tr>
+          <tr><td class="k"><span class="en">Equipment</span><span class="ar">العتاد</span></td><td><span class="en">Kept, but your weapon's edge dulls until tended in the city — a cost in time, not in loss.</span><span class="ar">يبقى، لكن حدّ سلاحك يثلم حتى يُعتنى به في المدينة — كلفةٌ في الوقت، لا خسارة.</span></td></tr>
+          <tr><td class="k"><span class="en">Carried materials</span><span class="ar">المواد المحمولة</span></td><td><span class="en">A portion drops where you fell, inside your Echo.</span><span class="ar">جزءٌ منها يسقط حيث سقطت، داخل «صداك».</span></td></tr>
+          <tr><td class="k"><span class="en">Epithets held</span><span class="ar">الكُنى المحمولة</span></td><td><span class="en">Some Epithets are death-bound: die while holding one and it returns to the world for anyone to earn.</span><span class="ar">بعض الكُنى مرهونة بالحياة: مُت وأنت تحملها تعُد إلى العالم ليكسبها من يستحقها.</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <p class="en">Where you fell, an <strong>Echo</strong> remains for a while — a faint standing image of your character at their last moment. You can return to reclaim what it holds. Clans with the right Charter extend this: <em>our dead leave Echoes for members</em>, letting clanmates recover a fallen friend's materials and carry the news home.</p>
+      <p class="ar">حيث سقطت، يبقى <strong>صدى</strong> لبعض الوقت — طيفٌ باهت واقف لشخصيتك في لحظتها الأخيرة. يمكنك العودة لاستعادة ما يحمله. والعشائر التي تملك الميثاق المناسب توسّع هذا: <em>موتانا يتركون أصداءً لأعضائنا</em> — فيستعيد رفاقك موادّ الصديق الساقط ويحملون الخبر إلى الديار.</p>
+
+      <div class="callout warn">
+        <span class="co-t"><span class="en">No corpse runs, no XP debt</span><span class="ar">لا ركض للجثة، لا دَين خبرة</span></span>
+        <p class="en">There is no experience to lose because there is no experience. Death takes the provisional and the portable — never the permanent.</p>
+        <p class="ar">لا توجد خبرة لتخسرها لأنه لا توجد خبرة أصلًا. الموت يأخذ المؤقت والمحمول — ولا يمسّ الدائم أبدًا.</p>
+      </div>
+    </section>
+
+    <!-- 05 Tracks -->
+    <section class="doc reveal" id="tracks">
+      <div class="sec-head"><span class="num">05</span><h2><span class="en">The twelve tracks</span><span class="ar">المسارات الاثنا عشر</span></h2></div>
+      <p class="en">The Chronicle is read along twelve tracks. None is an experience bar; each is a different answer to the question <em>"what has this character actually done?"</em> A veteran has vastly more <strong>options</strong> than a newcomer — and only marginally more raw power.</p>
+      <p class="ar">يُقرأ السجلّ عبر اثني عشر مسارًا. لا واحد منها شريط خبرة؛ كلٌّ منها جوابٌ مختلف عن سؤال: <em>«ماذا فعلت هذه الشخصية فعلًا؟»</em>. المخضرم يملك <strong>خيارات</strong> أكثر بكثير من المبتدئ — وقوةً خامًا أكبر بهامش ضئيل فقط.</p>
+
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th>#</th>
+          <th><span class="en">Track</span><span class="ar">المسار</span></th>
+          <th><span class="en">What it records</span><span class="ar">ماذا يدوّن</span></th>
+          <th><span class="en">What it gives</span><span class="ar">ماذا يمنح</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="k">01</td><td class="k"><span class="en">Masteries</span><span class="ar">الإتقانات</span></td><td><span class="en">~12 discrete Insights per weapon family, each discovered by a specific act</span><span class="ar">نحو 12 بصيرة منفصلة لكل عائلة سلاح، تُكتشف كلٌّ بفعل محدد</span></td><td><span class="en">Rule-changing combat options</span><span class="ar">خيارات قتال تغيّر القواعد</span></td></tr>
+          <tr><td class="k">02</td><td class="k"><span class="en">Weapon experience</span><span class="ar">خبرة السلاح</span></td><td><span class="en">Familiarity per weapon; Provenance lines for weapons carried through legend</span><span class="ar">أُلفة لكل سلاح؛ وسطور «نسب» للأسلحة التي عبرت الأساطير</span></td><td><span class="en">Technique slots, market value</span><span class="ar">خانات تقنيات، وقيمة سوقية</span></td></tr>
+          <tr><td class="k">03</td><td class="k"><span class="en">Skill evolution</span><span class="ar">تطوّر المهارات</span></td><td><span class="en">Your last 200 casts and the contexts they happened in</span><span class="ar">آخر 200 استخدام والسياقات التي حدثت فيها</span></td><td><span class="en">Branching skill Evolutions you choose</span><span class="ar">تفرّعات مهارات تختارها بنفسك</span></td></tr>
+          <tr><td class="k">04</td><td class="k"><span class="en">Class evolution</span><span class="ar">تطوّر الصنف</span></td><td><span class="en">Everyone begins a Wanderer; Callings are offered from what you did</span><span class="ar">الجميع يبدأ جوّالًا؛ وتُعرض «النداءات» مما فعلته فعلًا</span></td><td><span class="en">A class that is evidence, not a menu pick</span><span class="ar">صنفٌ هو دليل، لا اختيار من قائمة</span></td></tr>
+          <tr><td class="k">05</td><td class="k"><span class="en">Titles</span><span class="ar">الألقاب</span></td><td><span class="en">Marks → Titles → world-unique Epithets</span><span class="ar">علامات ← ألقاب ← كُنى يتيمة في العالم</span></td><td><span class="en">Contested social proof</span><span class="ar">دليل اجتماعي مُتنازَع عليه</span></td></tr>
+          <tr><td class="k">06</td><td class="k"><span class="en">Reputation</span><span class="ar">السمعة</span></td><td><span class="en">NPC memory travelling a social graph at different speeds</span><span class="ar">ذاكرة شخصيات تسري عبر شبكة اجتماعية بسرعات مختلفة</span></td><td><span class="en">Access: services, contracts, doors</span><span class="ar">وصول: خدمات وعقود وأبواب</span></td></tr>
+          <tr><td class="k">07</td><td class="k"><span class="en">Knowledge</span><span class="ar">المعرفة</span></td><td><span class="en">Monster tells, routes, glyphs — teachable to other players</span><span class="ar">إشارات الوحوش والطرق والرموز — قابلة للتعليم للاعبين آخرين</span></td><td><span class="en">The anti-wiki axis; mentorship writes in both Chronicles</span><span class="ar">المحور المضاد للويكي؛ الإرشاد يكتب في السجلَّين معًا</span></td></tr>
+          <tr><td class="k">08</td><td class="k"><span class="en">Exploration</span><span class="ar">الاستكشاف</span></td><td><span class="en">Per-character fog of war; your maps are objects</span><span class="ar">ضباب حربٍ لكل شخصية؛ وخرائطك أشياء ملموسة</span></td><td><span class="en">Tradeable cartography, first-arrival lines</span><span class="ar">خرائط قابلة للتداول، وسطور «الأول»</span></td></tr>
+          <tr><td class="k">09</td><td class="k"><span class="en">Story choices</span><span class="ar">خيارات القصة</span></td><td><span class="en">Irreversible Convictions that cannot contradict each other</span><span class="ar">قناعات لا رجعة فيها ولا يناقض بعضُها بعضًا</span></td><td><span class="en">Real identity divergence, gated content</span><span class="ar">تباعُد هوية حقيقي ومحتوى مشروط</span></td></tr>
+          <tr><td class="k">10</td><td class="k"><span class="en">Boss achievements</span><span class="ar">إنجازات الزعماء</span></td><td><span class="en">The conditions of each kill: solo, deathless, under the storm…</span><span class="ar">ظروف كل قتلة: منفردًا، بلا موت، تحت العاصفة…</span></td><td><span class="en">Bosses stay interesting on the fortieth kill</span><span class="ar">زعماء يبقون مشوّقين في القتلة الأربعين</span></td></tr>
+          <tr><td class="k">11</td><td class="k"><span class="en">Clan reputation</span><span class="ar">سمعة العشيرة</span></td><td><span class="en">A Chronicle of Chronicles, written by members</span><span class="ar">سجلٌّ من السجلّات، يكتبه الأعضاء</span></td><td><span class="en">Halls, Charters, Standing in the city</span><span class="ar">قاعات ومواثيق ومكانة في المدينة</span></td></tr>
+          <tr><td class="k">12</td><td class="k"><span class="en">World contribution</span><span class="ar">الإسهام في العالم</span></td><td><span class="en">Bridges repaired, districts funded, herbs reseeded</span><span class="ar">جسور رُمّمت وأحياء مُوّلت وأعشاب أُعيد زرعها</span></td><td><span class="en">The city visibly changes for everyone</span><span class="ar">مدينة تتغيّر أمام أعين الجميع</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <p class="muted en">Tracks feed each other: Masteries feed Class evolution, Reputation gates the Hollowmarket, Boss conditions grant Insights, Knowledge opens hidden rooms. Nothing is a silo.</p>
+      <p class="muted ar">المسارات يغذّي بعضها بعضًا: الإتقانات تغذّي تطوّر الصنف، والسمعة تفتح سوق الجوف، وشروط الزعماء تمنح بصائر، والمعرفة تفتح الغرف الخفية. لا شيء معزول.</p>
+    </section>
+
+    <!-- 06 Attunement -->
+    <section class="doc reveal" id="attunement">
+      <div class="sec-head"><span class="num">06</span><h2><span class="en">Attunement &amp; loadouts</span><span class="ar">التناغم والتجهيزات</span></h2></div>
+      <p class="en">Everything you earn — Insights, Convictions, Knowledge, Titles — exposes <strong>Attunements</strong>: slottable options. You have a small number of slots that grows very slowly. Everything you have ever earned stays available; almost none of it is active at once.</p>
+      <p class="ar">كل ما تكسبه — بصائر وقناعات ومعرفة وألقاب — يكشف عن <strong>تناغمات</strong>: خيارات قابلة للتركيب. لديك عددٌ صغير من الخانات ينمو ببطء شديد. كل ما كسبته يومًا يبقى متاحًا؛ ولا يكاد شيء منه يكون نشطًا في آنٍ واحد.</p>
+      <p class="en">Before a Descent you sit at the fire and choose your Attunements the way another game's raider reads a boss guide: <em>what will this place ask of me?</em> The veteran's advantage is breadth of answer, not size of number.</p>
+      <p class="ar">قبل النزول تجلس عند النار وتختار تناغماتك كما يقرأ لاعبُ لعبةٍ أخرى دليلَ الزعيم: <em>ماذا سيطلب مني هذا المكان؟</em> ميزة المخضرم اتساع الأجوبة، لا كِبَر الرقم.</p>
+
+      <div class="callout warn">
+        <span class="co-t"><span class="en">Never rewarded · by law</span><span class="ar">ممنوحٌ أبدًا · بحكم القانون</span></span>
+        <p class="en">Flat percentage stat increases · power that scales with time played · anything that makes a veteran strictly better at the same action · repeatable sources of permanent power.</p>
+        <p class="ar">زيادات نسبية ثابتة في الإحصاءات · قوة تنمو بالوقت المُلعَب · أي شيء يجعل المخضرم أفضل حتمًا في الفعل نفسه · مصادر متكررة لقوة دائمة.</p>
+      </div>
+    </section>
+
+    <!-- 07 City -->
+    <section class="doc reveal" id="city">
+      <div class="sec-head"><span class="num">07</span><h2><span class="en">Anchorhold — the city</span><span class="ar">أنكورهولد — المدينة</span></h2></div>
+      <p class="en">Anchorhold is the only settlement in the Realm, and the beating heart of the design: the one place pages reliably become permanent. Everything flows toward it and back out of it.</p>
+      <p class="ar">أنكورهولد هي المستوطنة الوحيدة في المملكة، والقلب النابض للتصميم: المكان الوحيد الذي تصير فيه الصفحات دائمة على نحوٍ مضمون. كل شيء يتدفق نحوها ثم يعود منها.</p>
+
+      <div class="tip-grid">
+        <div class="tip r-legendary">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">The Grand Waystone</span><span class="ar">حجر الطريق الأعظم</span></div>
+            <div class="tip-type"><span class="en">District · city center</span><span class="ar">حي · مركز المدينة</span></div>
+          </div>
+          <div class="tip-body">
+            <p class="en">The safe inscription point. Queues form here after a Collapse survives — a plaza full of people becoming permanent.</p>
+            <p class="ar">نقطة التدوين الآمنة. تتشكل هنا الطوابير بعد النجاة من انهيار — ساحة مليئة بأناسٍ يصيرون دائمين.</p>
+          </div>
+        </div>
+        <div class="tip r-epic">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">Monument Walk</span><span class="ar">ممشى النصب</span></div>
+            <div class="tip-type"><span class="en">District · public record</span><span class="ar">حي · السجل العام</span></div>
+          </div>
+          <div class="tip-body">
+            <p class="en">Where the Realm's greatest Deeds are carved in stone, publicly, forever. World contribution is logged here for everyone to read.</p>
+            <p class="ar">حيث تُنحت أعظم مآثر المملكة في الحجر، علنًا وللأبد. يُسجَّل هنا الإسهام في العالم ليقرأه الجميع.</p>
+          </div>
+        </div>
+        <div class="tip r-epic">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">Banner Row</span><span class="ar">صف الرايات</span></div>
+            <div class="tip-type"><span class="en">District · clans</span><span class="ar">حي · العشائر</span></div>
+          </div>
+          <div class="tip-body">
+            <p class="en">Clan halls and standings. Where your banner hangs — and how high — is earned by the clan Chronicle, not bought.</p>
+            <p class="ar">قاعات العشائر ومكانتها. أين تُعلَّق رايتك — وكم عاليًا — يُكسب بسجلّ العشيرة، لا يُشترى.</p>
+          </div>
+        </div>
+        <div class="tip r-rare">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">The Craftrows</span><span class="ar">صفوف الحرفيين</span></div>
+            <div class="tip-type"><span class="en">District · economy</span><span class="ar">حي · الاقتصاد</span></div>
+          </div>
+          <div class="tip-body">
+            <p class="en">Forges, looms, cartography tables. Materials from repetition become gear here; Insights unlock crafting techniques.</p>
+            <p class="ar">أفران وأنوال وطاولات خرائط. موادُّ التكرار تصير عتادًا هنا؛ والبصائر تفتح تقنيات الصناعة.</p>
+          </div>
+        </div>
+        <div class="tip r-rare">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">The Hollowmarket</span><span class="ar">سوق الجوف</span></div>
+            <div class="tip-type"><span class="en">District · under the city</span><span class="ar">حي · تحت المدينة</span></div>
+          </div>
+          <div class="tip-body">
+            <p class="en">The gray market below. Entry is not bought — it is reputational. What is sold here asks fewer questions.</p>
+            <p class="ar">السوق الرمادي في الأسفل. الدخول لا يُشترى — بل بالسمعة. وما يُباع هنا يسأل أسئلة أقل.</p>
+          </div>
+        </div>
+        <div class="tip r-uncommon">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">The Gates</span><span class="ar">البوابات</span></div>
+            <div class="tip-type"><span class="en">District · departures</span><span class="ar">حي · المغادرة</span></div>
+          </div>
+          <div class="tip-body">
+            <p class="en">Contracts, rumors, expedition boards. Every journey out of the city starts by hearing what the world is doing today.</p>
+            <p class="ar">عقود وإشاعات ولوحات بعثات. كل رحلة خارج المدينة تبدأ بسماع ما يفعله العالم اليوم.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted en">The city itself has a <strong>Condition</strong> — repaired bridges, funded districts, reseeded herbs. It visibly improves or decays with what players collectively do. Newcomers inherit the city veterans built.</p>
+      <p class="muted ar">للمدينة نفسها <strong>حالة</strong> — جسور مرمَّمة، أحياء ممولة، أعشاب أُعيد زرعها. تتحسّن أو تتدهور أمام العين بما يفعله اللاعبون جماعيًا. والمبتدئون يرثون المدينة التي بناها المخضرمون.</p>
+    </section>
+
+    <!-- 08 Activities -->
+    <section class="doc reveal" id="activities">
+      <div class="sec-head"><span class="num">08</span><h2><span class="en">Activities</span><span class="ar">الأنشطة</span></h2></div>
+      <p class="en">Every activity does the same thing — generates Unwritten pages — which is why the game is one ecosystem, not a launcher of modes. What differs is the pressure applied.</p>
+      <p class="ar">كل الأنشطة تفعل الشيء نفسه — تولّد صفحات غير مدوَّنة — ولهذا فاللعبة نظامٌ بيئي واحد، لا قائمة أطوار. ما يختلف هو نوع الضغط.</p>
+
+      <div class="tip-grid">
+        <div class="tip r-rare">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">The Descents</span><span class="ar">النزولات</span></div>
+            <div class="tip-type"><span class="en">Instanced delve · PvE</span><span class="ar">نزول منفصل · ضد البيئة</span></div>
+          </div>
+          <div class="tip-body">
+            <ul class="stats">
+              <li><span class="stat-k"><span class="en">Party</span><span class="ar">الفريق</span></span><span class="stat-v">1–4</span></li>
+              <li><span class="stat-k"><span class="en">Length</span><span class="ar">المدة</span></span><span class="stat-v">30–70 <span class="en">min</span><span class="ar">دقيقة</span></span></li>
+              <li><span class="stat-k"><span class="en">Risk</span><span class="ar">الخطورة</span></span><span class="stat-v"><span class="risk md">●●○ <span class="en">Medium–High</span><span class="ar">متوسطة–عالية</span></span></span></li>
+              <li><span class="stat-k"><span class="en">Writes</span><span class="ar">يكتب</span></span><span class="stat-v gold"><span class="en">Insights · Knowledge · Maps</span><span class="ar">بصائر · معرفة · خرائط</span></span></li>
+            </ul>
+            <p class="en">Hand-built underground expeditions whose premises react to your Convictions. Waystones inside are rare and contested.</p>
+            <p class="ar">بعثات جوفية مبنية يدويًا، تتفاعل مقدماتها مع قناعاتك. أحجار الطريق في داخلها نادرة ومُتنازَع عليها.</p>
+          </div>
+        </div>
+
+        <div class="tip r-legendary">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">The Collapse</span><span class="ar">الانهيار</span></div>
+            <div class="tip-type"><span class="en">World-ending storm · seasonal apex</span><span class="ar">عاصفة تُنهي العالم · ذروة موسمية</span></div>
+          </div>
+          <div class="tip-body">
+            <ul class="stats">
+              <li><span class="stat-k"><span class="en">Party</span><span class="ar">الفريق</span></span><span class="stat-v">20+ <span class="en">strangers</span><span class="ar">غرباء</span></span></li>
+              <li><span class="stat-k"><span class="en">Cadence</span><span class="ar">التواتر</span></span><span class="stat-v"><span class="en">Every few weeks, announced</span><span class="ar">كل بضعة أسابيع، بإعلان</span></span></li>
+              <li><span class="stat-k"><span class="en">Risk</span><span class="ar">الخطورة</span></span><span class="stat-v"><span class="risk xx">●●● <span class="en">Extreme</span><span class="ar">قصوى</span></span></span></li>
+              <li><span class="stat-k"><span class="en">Writes</span><span class="ar">يكتب</span></span><span class="stat-v gold"><span class="en">Deeds · Epithets · legend</span><span class="ar">مآثر · كُنى · أسطورة</span></span></li>
+            </ul>
+            <p class="en">A region-swallowing storm. Survivors reach the gate together or not at all. You draft a temporary kit from your own Chronicle on entry — the Collapse reads what you have lived and offers it back.</p>
+            <p class="ar">عاصفة تبتلع إقليمًا كاملًا. الناجون يبلغون البوابة معًا أو لا يبلغونها أبدًا. عند الدخول تنتقي عدّة مؤقتة من سجلّك أنت — الانهيار يقرأ ما عشته ويعرضه عليك من جديد.</p>
+          </div>
+        </div>
+
+        <div class="tip r-epic">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">Raids</span><span class="ar">الغارات</span></div>
+            <div class="tip-type"><span class="en">Clan expedition · PvE</span><span class="ar">بعثة عشيرة · ضد البيئة</span></div>
+          </div>
+          <div class="tip-body">
+            <ul class="stats">
+              <li><span class="stat-k"><span class="en">Party</span><span class="ar">الفريق</span></span><span class="stat-v">8–12</span></li>
+              <li><span class="stat-k"><span class="en">Risk</span><span class="ar">الخطورة</span></span><span class="stat-v"><span class="risk hi">●●● <span class="en">High</span><span class="ar">عالية</span></span></span></li>
+              <li><span class="stat-k"><span class="en">Writes</span><span class="ar">يكتب</span></span><span class="stat-v gold"><span class="en">Boss conditions · clan Chronicle</span><span class="ar">شروط الزعماء · سجلّ العشيرة</span></span></li>
+            </ul>
+            <p class="en">Boss hunts where the fortieth kill still matters — you hunt conditions (solo-phase, deathless, under the storm), not drops.</p>
+            <p class="ar">مطاردات زعماء تبقى فيها القتلة الأربعون مهمة — أنت تطارد الشروط (طور منفرد، بلا موت، تحت العاصفة)، لا الغنائم.</p>
+          </div>
+        </div>
+
+        <div class="tip r-rare">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">The Ring</span><span class="ar">الحلبة</span></div>
+            <div class="tip-type"><span class="en">Formal duels · PvP</span><span class="ar">مبارزات رسمية · لاعب ضد لاعب</span></div>
+          </div>
+          <div class="tip-body">
+            <ul class="stats">
+              <li><span class="stat-k"><span class="en">Party</span><span class="ar">الفريق</span></span><span class="stat-v">1v1 · 3v3</span></li>
+              <li><span class="stat-k"><span class="en">Risk</span><span class="ar">الخطورة</span></span><span class="stat-v"><span class="risk md">●●○ <span class="en">Stakes chosen</span><span class="ar">رهانٌ تختاره</span></span></span></li>
+              <li><span class="stat-k"><span class="en">Writes</span><span class="ar">يكتب</span></span><span class="stat-v gold"><span class="en">Titles · Epithet challenges</span><span class="ar">ألقاب · تحدّي الكُنى</span></span></li>
+            </ul>
+            <p class="en">Consensual, witnessed, written. Some Epithets can only change hands here — beaten out of the holder in front of the city.</p>
+            <p class="ar">بالتراضي، بشهود، ويُدوَّن. بعض الكُنى لا تنتقل إلا هنا — تُنتزع من حاملها بالهزيمة أمام المدينة.</p>
+          </div>
+        </div>
+
+        <div class="tip r-uncommon">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">World events</span><span class="ar">أحداث العالم</span></div>
+            <div class="tip-type"><span class="en">Open world · dynamic</span><span class="ar">عالم مفتوح · ديناميكي</span></div>
+          </div>
+          <div class="tip-body">
+            <ul class="stats">
+              <li><span class="stat-k"><span class="en">Party</span><span class="ar">الفريق</span></span><span class="stat-v"><span class="en">Whoever is there</span><span class="ar">من كان حاضرًا</span></span></li>
+              <li><span class="stat-k"><span class="en">Risk</span><span class="ar">الخطورة</span></span><span class="stat-v"><span class="risk md">●○○–●●● <span class="en">Varies</span><span class="ar">متفاوتة</span></span></span></li>
+              <li><span class="stat-k"><span class="en">Writes</span><span class="ar">يكتب</span></span><span class="stat-v gold"><span class="en">Marks · World contribution</span><span class="ar">علامات · إسهام في العالم</span></span></li>
+            </ul>
+            <p class="en">Sieges, migrations, storms, strange lights. The world does things on its own schedule; being present writes.</p>
+            <p class="ar">حصارات وهجرات وعواصف وأضواء غريبة. العالم يفعل أشياءه بجدوله الخاص؛ ومجرد الحضور يُدوَّن.</p>
+          </div>
+        </div>
+
+        <div class="tip r-uncommon">
+          <div class="tip-head">
+            <div class="tip-name"><span class="en">Exploration</span><span class="ar">الاستكشاف</span></div>
+            <div class="tip-type"><span class="en">Open world · cartography</span><span class="ar">عالم مفتوح · خرائطية</span></div>
+          </div>
+          <div class="tip-body">
+            <ul class="stats">
+              <li><span class="stat-k"><span class="en">Party</span><span class="ar">الفريق</span></span><span class="stat-v">1+</span></li>
+              <li><span class="stat-k"><span class="en">Risk</span><span class="ar">الخطورة</span></span><span class="stat-v"><span class="risk lo">●○○–●●○ <span class="en">Your choice</span><span class="ar">أنت تختار</span></span></span></li>
+              <li><span class="stat-k"><span class="en">Writes</span><span class="ar">يكتب</span></span><span class="stat-v gold"><span class="en">Maps · Knowledge · firsts</span><span class="ar">خرائط · معرفة · أوائل</span></span></li>
+            </ul>
+            <p class="en">The world is unmapped per character. You draw the map by walking it — and a well-annotated chart of somewhere lethal has a real price at the Craftrows.</p>
+            <p class="ar">العالم غير مُخرَّط لكل شخصية. أنت ترسم الخريطة بمشيك فيها — وخريطةٌ موثّقة جيدًا لمكانٍ قاتل لها ثمن حقيقي في صفوف الحرفيين.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 Economy -->
+    <section class="doc reveal" id="economy">
+      <div class="sec-head"><span class="num">09</span><h2><span class="en">Economy &amp; crafting</span><span class="ar">الاقتصاد والصناعة</span></h2></div>
+      <p class="en">The split is clean: <strong>repetition produces economy, novelty produces power</strong>. Materials and currency come from doing things again; they are fully real and fully tradeable. Power never is.</p>
+      <p class="ar">التقسيم واضح: <strong>التكرار يُنتج اقتصادًا، والجِدّة تُنتج قوة</strong>. المواد والعملة تأتيان من تكرار الأفعال؛ وهما حقيقيتان وقابلتان للتداول بالكامل. أما القوة فلا تُتداول أبدًا.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th><span class="en">Tradeable</span><span class="ar">قابل للتداول</span></th>
+          <th><span class="en">Never tradeable</span><span class="ar">غير قابل للتداول أبدًا</span></th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="en">Materials, currency, gear, consumables</span><span class="ar">المواد، العملة، العتاد، المستهلكات</span></td>
+            <td><span class="en">Insights, Convictions, Titles, Knowledge<sup>*</sup></span><span class="ar">البصائر، القناعات، الألقاب، المعرفة<sup>*</sup></span></td>
+          </tr>
+          <tr>
+            <td><span class="en">Maps you drew — cartography is a profession</span><span class="ar">الخرائط التي رسمتها — الخرائطية مهنة</span></td>
+            <td><span class="en">Chronicle entries of any weight</span><span class="ar">مداخل السجلّ بأي وزن</span></td>
+          </tr>
+          <tr>
+            <td><span class="en">Provenance weapons — history raises price</span><span class="ar">أسلحة «النسب» — التاريخ يرفع السعر</span></td>
+            <td><span class="en">Attunement slots</span><span class="ar">خانات التناغم</span></td>
+          </tr>
+        </tbody>
+      </table></div>
+      <p class="muted en"><sup>*</sup>Knowledge cannot be sold — but it can be <strong>taught</strong>, face to face, and the teaching itself writes a line in both Chronicles. The game pays you in fiction for what players were going to do on a forum anyway.</p>
+      <p class="muted ar"><sup>*</sup>المعرفة لا تُباع — لكنها <strong>تُعلَّم</strong> وجهًا لوجه، والتعليم نفسه يكتب سطرًا في السجلَّين معًا. اللعبة تكافئك داخل الحكاية على ما كان اللاعبون سيفعلونه في المنتديات أصلًا.</p>
+      <p class="en">A weapon that went through something legendary carries a <strong>Provenance line</strong>: <em>"This blade held the Stormwall gate, Y2 D3."</em> Collectors exist. Auction drama is intended.</p>
+      <p class="ar">السلاح الذي عبر حدثًا أسطوريًا يحمل <strong>سطر نسب</strong>: <em>«هذا النصل صمد عند بوابة جدار العاصفة، السنة 2 اليوم 3»</em>. هواة الاقتناء موجودون. ودراما المزادات مقصودة.</p>
+    </section>
+
+    <!-- 10 Clans -->
+    <section class="doc reveal" id="clans">
+      <div class="sec-head"><span class="num">10</span><h2><span class="en">Clans</span><span class="ar">العشائر</span></h2></div>
+      <p class="en">A clan keeps a <strong>Chronicle of Chronicles</strong> — its own book, written by what its members do. The clan book unlocks three things:</p>
+      <p class="ar">تحفظ العشيرة <strong>سجلًّا من السجلّات</strong> — كتابها الخاص، يُكتب بما يفعله أعضاؤها. وكتاب العشيرة يفتح ثلاثة أشياء:</p>
+      <div class="tip-grid">
+        <div class="tip r-rare">
+          <div class="tip-head"><div class="tip-name"><span class="en">Halls</span><span class="ar">القاعات</span></div><div class="tip-type"><span class="en">Physical presence</span><span class="ar">حضور مادي</span></div></div>
+          <div class="tip-body"><p class="en">A hall on Banner Row: shared storage, a private fire for Attunement, a wall for the clan's own monuments.</p><p class="ar">قاعة في صف الرايات: مخزن مشترك، ونارٌ خاصة للتناغم، وجدار لنُصُب العشيرة الخاصة.</p></div>
+        </div>
+        <div class="tip r-epic">
+          <div class="tip-head"><div class="tip-name"><span class="en">Charters</span><span class="ar">المواثيق</span></div><div class="tip-type"><span class="en">Rule changes</span><span class="ar">تعديلات قواعد</span></div></div>
+          <div class="tip-body"><p class="en">Clan-wide rule modifications, earned not bought: <em>our dead leave Echoes for members · our maps auto-share · our Waystones burn longer.</em></p><p class="ar">تعديلات قواعد على مستوى العشيرة، تُكسب ولا تُشترى: <em>موتانا يتركون أصداءً لأعضائنا · خرائطنا تُشارك تلقائيًا · أحجار طريقنا تتوهج أطول.</em></p></div>
+        </div>
+        <div class="tip r-legendary">
+          <div class="tip-head"><div class="tip-name"><span class="en">Standing</span><span class="ar">المكانة</span></div><div class="tip-type"><span class="en">City influence</span><span class="ar">نفوذ في المدينة</span></div></div>
+          <div class="tip-body"><p class="en">Banner placement, district influence, a voice in what the city funds next. Standing decays if the clan sleeps.</p><p class="ar">موضع الراية، ونفوذ الحي، وصوتٌ فيما تموّله المدينة تاليًا. والمكانة تذبل إذا نامت العشيرة.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 Laws -->
+    <section class="doc reveal" id="laws">
+      <div class="sec-head"><span class="num">11</span><h2><span class="en">The two design laws</span><span class="ar">قانونا التصميم</span></h2></div>
+      <blockquote>
+        <span class="en"><strong>Law 01.</strong> The Chronicle only records what it has not recorded before. Repetition produces economy. Novelty and consequence produce power.</span>
+        <span class="ar"><strong>القانون 01.</strong> السجلّ لا يدوّن إلا ما لم يدوّنه من قبل. التكرار يُنتج اقتصادًا. والجِدّة والعاقبة تُنتجان قوة.</span>
+      </blockquote>
+      <blockquote>
+        <span class="en"><strong>Law 02.</strong> No reward is a number. Every reward changes a rule, grants an option, or opens an access.</span>
+        <span class="ar"><strong>القانون 02.</strong> لا مكافأة تكون رقمًا. كل مكافأة تغيّر قاعدة، أو تمنح خيارًا، أو تفتح وصولًا.</span>
+      </blockquote>
+      <p class="en">Every proposed feature is reviewed against both laws. A reward that reads "+3% damage" is rejected at review and never ships. What ships instead: a technique, a route, a right, a door. These two sentences are why the game can promise <em>no levels, no wipes</em> and keep the promise.</p>
+      <p class="ar">كل ميزة مقترحة تُراجع على ضوء القانونين. المكافأة التي نصّها «+3% ضرر» تُرفض عند المراجعة ولا تصدر أبدًا. ما يصدر بدلها: تقنية، أو طريق، أو حق، أو باب. هاتان الجملتان هما سبب قدرة اللعبة على أن تعِد بـ<em>لا مستويات، لا مسح</em> — وأن تفي بالوعد.</p>
+    </section>
+
+    <!-- 12 FAQ -->
+    <section class="doc reveal" id="faq">
+      <div class="sec-head"><span class="num">12</span><h2><span class="en">Frequently asked</span><span class="ar">أسئلة شائعة</span></h2></div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="caret">▶</span><span class="en">So there are really no levels at all?</span><span class="ar">يعني فعلًا ما فيه مستويات إطلاقًا؟</span></button>
+        <div class="faq-a"><p class="en">Really none. There is no XP bar anywhere in the interface. Your character page is your Chronicle — a book, not a sheet of numbers. Power comes from Insights (rule-changing options), and the total raw-power gap between hour 100 and hour 3000 is deliberately small.</p><p class="ar">فعلًا لا شيء. لا يوجد شريط خبرة في أي مكان من الواجهة. صفحة شخصيتك هي سجلُّك — كتاب، لا ورقة أرقام. القوة تأتي من البصائر (خيارات تغيّر القواعد)، وفجوة القوة الخام بين الساعة 100 والساعة 3000 صغيرة عمدًا.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="caret">▶</span><span class="en">What exactly do I lose when I die?</span><span class="ar">وش أخسر بالضبط إذا مت؟</span></button>
+        <div class="faq-a"><p class="en">Your Unwritten pages (the provisional record since your last inscription), a portion of carried materials (recoverable from your Echo), and temporary weapon condition. Never an inscribed entry. Failure costs the last hour, never the last year.</p><p class="ar">صفحاتك غير المدوَّنة (السجل المؤقت منذ آخر تدوين)، وجزءًا من المواد المحمولة (يمكن استعادته من صداك)، وحالة السلاح مؤقتًا. أما المدخل المدوَّن فلا يُمَسّ أبدًا. الفشل يكلّف الساعة الأخيرة، لا السنة الأخيرة.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="caret">▶</span><span class="en">Can I play solo?</span><span class="ar">أقدر ألعب منفردًا؟</span></button>
+        <div class="faq-a"><p class="en">Yes. Descents scale 1–4, exploration and world events are yours alone if you want them, and soloing a boss writes one of the strongest condition lines in the game. The Collapse is the one activity that genuinely wants a crowd.</p><p class="ar">نعم. النزولات تتدرج من 1 إلى 4، والاستكشاف وأحداث العالم لك وحدك إن أردت، وقتل زعيم منفردًا يكتب واحدًا من أقوى سطور الشروط في اللعبة. الانهيار هو النشاط الوحيد الذي يريد حشدًا حقًا.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="caret">▶</span><span class="en">Will a veteran destroy me in PvP?</span><span class="ar">هل المخضرم بيسحقني في القتال؟</span></button>
+        <div class="faq-a"><p class="en">They will have more answers, not bigger numbers — a counter you have not seen, a route you did not know. That gap closes with knowledge, and knowledge is teachable. By law, nothing makes a veteran strictly better at the same action.</p><p class="ar">سيملك أجوبة أكثر، لا أرقامًا أكبر — ردًّا لم ترَه، وطريقًا لم تعرفه. وهذه الفجوة تُغلق بالمعرفة، والمعرفة قابلة للتعليم. وبحكم القانون، لا شيء يجعل المخضرم أفضل حتمًا في الفعل نفسه.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="caret">▶</span><span class="en">Is there pay-to-win?</span><span class="ar">فيه دفع مقابل قوة؟</span></button>
+        <div class="faq-a"><p class="en">Law 02 makes it structurally impossible: no reward is a number, and nothing sold may change a rule, grant an option, or open an access. Monetization is cosmetic and account services only. Nothing purchasable ever writes in a Chronicle.</p><p class="ar">القانون 02 يجعله مستحيلًا بنيويًا: لا مكافأة تكون رقمًا، ولا شيء يُباع يغيّر قاعدة أو يمنح خيارًا أو يفتح وصولًا. تسييل اللعبة تجميلي وخدمات حساب فقط. لا شيء يُشترى يكتب في السجلّ أبدًا.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="caret">▶</span><span class="en">What happens in alpha — will my progress be wiped?</span><span class="ar">وش يصير في الألفا — بينمسح تقدمي؟</span></button>
+        <div class="faq-a"><p class="en">No. The closed alpha is the first hundred Chronicles, and nothing written in alpha is ever wiped. Those hundred books will be readable on the Monument Walk at launch. That is the whole point of the game.</p><p class="ar">لا. الألفا المغلقة هي أول مئة سجلّ، ولا يُمحى شيء كُتب فيها أبدًا. تلك الكتب المئة ستكون مقروءة على ممشى النصب عند الإطلاق. هذه هي فكرة اللعبة كلها.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="caret">▶</span><span class="en">Platforms and engine?</span><span class="ar">المنصات والمحرك؟</span></button>
+        <div class="faq-a"><p class="en">PC first. The playable prototype is in development now — core combat, the first Descent, and the inscription loop. Platform expansion is a post-beta question.</p><p class="ar">الحاسب أولًا. النموذج القابل للعب قيد التطوير الآن — القتال الأساسي وأول نزول وحلقة التدوين. أما التوسع في المنصات فسؤال ما بعد البيتا.</p></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <span class="label"><span class="en">Chronicles of the Shattered Realm · Codex · MMXXVI</span><span class="ar">سجلّات المملكة المتصدّعة · الموسوعة · ٢٠٢٦</span></span>
+    <span class="foot-line"><span class="en">This Codex, like the Chronicle, is append-only. It only grows.</span><span class="ar">هذه الموسوعة، كالسجلّ، لا تُمحى — إنما تنمو.</span></span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var TITLES = { en: "The Codex — Chronicles of the Shattered Realm", ar: "الموسوعة — سجلّات المملكة المتصدّعة" };
+    var cur = "ar";
+    try { cur = localStorage.getItem("csr-lang") || "ar"; } catch (e) {}
+    if (cur !== "ar" && cur !== "en") cur = "ar";
+
+    var langBtnLabel = document.getElementById("langBtnLabel");
+
+    function setLang(l) {
+      cur = l;
+      var root = document.documentElement;
+      root.dataset.lang = l;
+      root.lang = l;
+      root.dir = l === "ar" ? "rtl" : "ltr";
+      try { localStorage.setItem("csr-lang", l); } catch (e) {}
+      langBtnLabel.textContent = l === "ar" ? "EN" : "عربي";
+      document.title = TITLES[l];
+    }
+
+    document.getElementById("langBtn").addEventListener("click", function () {
+      setLang(cur === "ar" ? "en" : "ar");
+    });
+
+    setLang(cur);
+
+    /* FAQ accordion */
+    document.querySelectorAll(".faq-q").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        btn.parentElement.classList.toggle("open");
+      });
+    });
+
+    /* scroll reveal */
+    if (!reduced && "IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add("vis"); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.06 });
+      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+    } else {
+      document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("vis"); });
+    }
+
+    /* active TOC highlighting */
+    var tocLinks = {};
+    document.querySelectorAll("#toc a").forEach(function (a) {
+      tocLinks[a.getAttribute("href").slice(1)] = a;
+    });
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var secIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) {
+            if (current) current.classList.remove("active");
+            current = tocLinks[en.target.id];
+            if (current) current.classList.add("active");
+          }
+        });
+      }, { rootMargin: "-20% 0px -70% 0px" });
+      document.querySelectorAll("section.doc").forEach(function (s) { secIo.observe(s); });
+    }
+  })();
+</script>
+</body>
+</html>
